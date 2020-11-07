@@ -1,53 +1,30 @@
 import time
 import sys
-import glob
+import os
 import argparse
 # add imports for each method file here
-
+from LocalSearch import Graph
+from LocalSearch import LocalSearch1
 
 parser = argparse.ArgumentParser(description='Run a Local Search Algorithm for Min Vertex Cover Problem')
-parser.add_argument("--filename", "-f", help='Which file to run', default='./DATA/dummy1.graph') 
-parser.add_argument("--method", help='Choose which method to run (BnB, Heuristics, LocalSearch)', default="BnB", choices=["BnB", "Heuristics", "LocalSearch"])
-parser.add_argument("--cutoff_time", help='When to stop the run in seconds', type=int, default=100)
-parser.add_argument("--seed", help='Random Seed for Local Search', type=int, default=32)
-parser.add_argument("--test", help='Run only sample files', action='store_true', default=False)
+parser.add_argument("-inst", help='Which file to run', default='./DATA/dummy1.graph') 
+parser.add_argument("-alg", help='Choose which method to run (BnB, Approx, LS1, LS2)', default="LS1", choices=["BnB", "Approx", "LS1", "LS2"])
+parser.add_argument("-time", help='When to stop the run in seconds', type=int, default=5)
+parser.add_argument("-seed", help='Random Seed for Local Search', type=int, default=32)
 args = parser.parse_args()
 
 if __name__ == '__main__':
+    if args.alg == "BnB":
+        #run Branch and Bound
+        print("Nothing implemented yet")
+    elif args.alg == "Approx": 
+        #run Heuristics
+        print("Nothing implemented yet")
+    elif args.alg == "LS1":
+        #run Decision based Local Search Framework
+        ls = LocalSearch1(args.inst, args.time, args.seed)
+        ls.main()
+    elif args.alg == "LS2": 
+        print("Nothing implemented yet")
+        #run Independent Set Local Search Framework
     
-
-    # check to run testcases only
-    if args.test:
-        all_gr_files = glob.glob("./DATA/*.graph")
-        sample_gr_files =  [pathname for pathname in all_gr_files if "dummy" in pathname or "email" in pathname or "jazz" in pathname]
-        sample_sol_files = glob.glob("./DATA/ExampleSolutions/*.sol")
-        print("Running all test files")
-
-        for i in range(len(sample_gr_files)):
-            print("Starting test case for " +sample_gr_files[i])
-            graph_file = sample_gr_files[i]
-            output_file = sample_sol_files[i]
-
-            if args.method == "BnB":
-                #run Branch and Bound
-                print("Nothing implemented yet")
-            elif args.method == "Heuristics": 
-                #run Heuristics
-                print("Nothing implemented yet")
-            elif args.method == "LocalSearch": 
-                #run LocalSearch
-                print("Nothing implemented yet")
-            
-
-    else:
-        file = args.filename
-        if args.method == "BnB":
-                #run Branch and Bound
-                print("Nothing implemented yet")
-        elif args.method == "Heuristics": 
-            #run Heuristics
-            print("Nothing implemented yet")
-        elif args.method == "LocalSearch": 
-            #run LocalSearch
-            print("Nothing implemented yet")
-        print(file)
