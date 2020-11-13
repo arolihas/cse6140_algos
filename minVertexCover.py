@@ -5,6 +5,7 @@ import argparse
 # add imports for each method file here
 from LocalSearch import Graph
 from LocalSearch import LocalSearch1
+import BrandAndBound
 
 parser = argparse.ArgumentParser(description='Run a Local Search Algorithm for Min Vertex Cover Problem')
 parser.add_argument("-inst", help='Which file to run', default='./DATA/dummy1.graph') 
@@ -16,7 +17,7 @@ args = parser.parse_args()
 if __name__ == '__main__':
     if args.alg == "BnB":
         #run Branch and Bound
-        print("Nothing implemented yet")
+        BrandAndBound.main(args.inst, args.time, args.seed)
     elif args.alg == "Approx": 
         #run Heuristics
         print("Nothing implemented yet")
@@ -25,6 +26,6 @@ if __name__ == '__main__':
         ls = LocalSearch1(args.inst, args.time, args.seed)
         ls.main()
     elif args.alg == "LS2": 
-        print("Nothing implemented yet")
         #run Independent Set Local Search Framework
+        print("Nothing implemented yet")
     

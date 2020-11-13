@@ -5,25 +5,12 @@ import sys
 import random
 import networkx as nx
 import os
+import utils
 
 class Graph:
     """ Vertex class is used to represent individual vertices during search"""
     def __init__(self, filename, random_seed):
-        self.Graph = nx.Graph()
-        random.seed(random_seed)
-        self.adj_list = []
-        with open(filename, 'r') as graph:
-            i = 0
-            for line in graph.readlines():
-                if i == 0:
-                    val = line.split()
-                    self.nodes, self.edges, unweighted = int(val[0]), int(val[1]), int(val[2])
-                    i += 1
-                else:
-                    self.adj_list.append(str(i) + ' ' + line)
-                    i += 1
-        self.Graph = nx.parse_adjlist(self.adj_list, nodetype=int)
-    
+        self.Graph, self.adj_list, self.nodes, self.edges = utils.read_graph(filename)
 
     # ConstructVC method (Algorithm 2 from paper)
     def ConstructVC(self):
@@ -116,19 +103,6 @@ class LocalSearch1:
         self.cutoff = cutoff
         self.random_seed = random_seed
 
-    def writeOutput(self, VertexCover, trace_output):
-        sol_file = "./Output/" + os.path.basename(self.filename)[:-6] + "_LS1_" + str(self.cutoff) + "_" + str(self.random_seed) + ".sol" 
-        trace_file = "./Output/" +  os.path.basename(self.filename)[:-6] + "_LS1_" + str(self.cutoff) + "_" + str(self.random_seed) + ".trace" 
-        with open(sol_file, 'w') as sol:
-            sol.write(str(len(VertexCover)) + "\n")
-            for vert in VertexCover[:-1]:
-                sol.write(str(vert) + ",")
-            sol.write(str(VertexCover[-1]))
-        
-        with open(trace_file, 'w') as trace:
-            for time, quality in trace_output:
-                trace.write(str(time) + "," + str(quality) + "\n")
-
     def main(self):
         trace_out = []
         uncovered_edges = set()
@@ -156,9 +130,5 @@ class LocalSearch1:
             else:
                 isVC = True
             elapsetime = time.time() - start_time
-        self.writeOutput(finalVC, trace_out)
-
-
-
-
-
+        print(self.filename, self.cutoff, self.random_seed, finalVC, trace_out)
+        utils.writeOutput(self.filename, '_LS1_', self.cutoff, self.random_seed, finalVC, trace_out)
