@@ -146,4 +146,4 @@ def main(inst, time, seed):
     print('trace_output: ', solution_times)
 
     # write outputs to file
-    utils.writeOutput(inst, '_BnB_', time, seed, vertex_cover, solution_times)
+    utils.writeOutput(inst, '_BnB_', cutoff, seed, vertex_cover, solution_times)
