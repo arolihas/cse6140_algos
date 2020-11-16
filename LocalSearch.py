@@ -130,5 +130,4 @@ class LocalSearch1:
             else:
                 isVC = True
             elapsetime = time.time() - start_time
-        print(self.filename, self.cutoff, self.random_seed, finalVC, trace_out)
         utils.writeOutput(self.filename, '_LS1_', self.cutoff, self.random_seed, finalVC, trace_out)
