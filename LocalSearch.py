@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # CSE6140 Project
 import time
 import sys
@@ -11,6 +10,7 @@ class Graph:
     """ Vertex class is used to represent individual vertices during search"""
     def __init__(self, filename, random_seed):
         self.Graph, self.adj_list, self.nodes, self.edges = utils.read_graph(filename)
+        random.seed(random_seed)
 
     # ConstructVC method (Algorithm 2 from paper)
     def ConstructVC(self):
@@ -97,6 +97,8 @@ class Graph:
         return VertexCover, uncovered_edges
 
 class LocalSearch1:
+
+    # 
     def __init__(self, filename, cutoff, random_seed):
         self.filename = filename
         self.graph = Graph(filename, random_seed)
