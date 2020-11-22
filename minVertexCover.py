@@ -3,9 +3,8 @@ import sys
 import os
 import argparse
 # add imports for each method file here
-from LocalSearch import Graph
-from LocalSearch import LocalSearch1, LocalSearch2
-import BrandAndBound
+from LocalSearch import Graph, LocalSearch1, LocalSearch2
+import BranchAndBound
 
 parser = argparse.ArgumentParser(description='Run a Local Search Algorithm for Min Vertex Cover Problem')
 parser.add_argument("-inst", help='Which file to run', default='./DATA/dummy1.graph') 
