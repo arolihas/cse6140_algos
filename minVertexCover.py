@@ -4,7 +4,7 @@ import os
 import argparse
 # add imports for each method file here
 from LocalSearch import Graph
-from LocalSearch import LocalSearch1
+from LocalSearch import LocalSearch1, LocalSearch2
 import BrandAndBound
 
 parser = argparse.ArgumentParser(description='Run a Local Search Algorithm for Min Vertex Cover Problem')
@@ -27,5 +27,6 @@ if __name__ == '__main__':
         ls.main()
     elif args.alg == "LS2": 
         #run Independent Set Local Search Framework
-        print("Nothing implemented yet")
+        ls = LocalSearch2(args.inst, args.time, args.seed)
+        ls.main()
     
