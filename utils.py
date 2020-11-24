@@ -25,6 +25,9 @@ def writeOutput(filename, algo, cutoff, random_seed, vertex_cover, trace_output)
     # write the solution and trace files
     sol_file = "./Output/" + os.path.basename(filename)[:-6] + algo + str(cutoff) + "_" + str(random_seed) + ".sol" 
     trace_file = "./Output/" +  os.path.basename(filename)[:-6] + algo + str(cutoff) + "_" + str(random_seed) + ".trace" 
+    if (algo == '_BnB_'):
+        sol_file = "./OutputBnB/" + os.path.basename(filename)[:-6] + algo + str(cutoff) + ".sol" 
+        trace_file = "./OutputBnB/" +  os.path.basename(filename)[:-6] + algo + str(cutoff) + ".trace" 
     with open(sol_file, 'w') as sol:
         sol.write(str(len(vertex_cover)) + "\n")
         for vert in vertex_cover[:-1]:

@@ -127,7 +127,7 @@ def calc_vc_size(vc):
 def main(inst, time, seed):
     # create graph
     g, adj_list, nodes, edges = utils.read_graph(inst)
-    cutoff = 600
+    cutoff = time # 600
 
     # run branch and bound
     vertices, solution_times = BnB(g, cutoff)

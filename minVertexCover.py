@@ -16,7 +16,7 @@ args = parser.parse_args()
 if __name__ == '__main__':
     if args.alg == "BnB":
         #run Branch and Bound
-        BrandAndBound.main(args.inst, args.time, args.seed)
+        BranchAndBound.main(args.inst, args.time, args.seed)
     elif args.alg == "Approx": 
         #run Heuristics
         print("Nothing implemented yet")
