@@ -28,10 +28,10 @@ def approximate_vertex_cover(G, T):
         times.append(t_delta)
     return vertex_cover, times
 
-def measure_performance(instance, time, seed):
+def measure_performance(instance, time, seed, folder):
     G = read_graph(instance)
     T = 600
     cover, times = approximate_vertex_cover(G, T)
     print("cover", cover)
     print("times", times)
-    writeOutput(instance, '_CH_', time, seed, cover, times)
+    writeOutput(instance, '_CH_', time, seed, cover, times, folder)
