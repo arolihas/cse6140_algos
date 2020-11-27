@@ -256,8 +256,4 @@ class LocalSearch2:
             elapsetime = time.time() - start_time
         
         finalVC = self.graph.convertVC(list(set(allVertIndices) - set(MaxIndSet)))
-<<<<<<< HEAD
         utils.writeOutput(self.filename, '_LS2_', self.cutoff, self.random_seed, finalVC, trace_out)
-=======
-        utils.writeOutput(self.filename, '_LS2_', self.cutoff, self.random_seed, finalVC, trace_out, self.folder)
->>>>>>> 2d106343b20f1ba4561b8b95ee85b85dd60f32b5
