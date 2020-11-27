@@ -124,7 +124,7 @@ def calc_vc_size(vc):
         vc_size = vc_size + element[1]
     return vc_size
 
-def main(inst, time, seed):
+def main(inst, time, seed, folder):
     # create graph
     g, adj_list, nodes, edges = utils.read_graph(inst)
     cutoff = time # 600
@@ -146,4 +146,4 @@ def main(inst, time, seed):
     print('trace_output: ', solution_times)
 
     # write outputs to file
-    utils.writeOutput(inst, '_BnB_', cutoff, seed, vertex_cover, solution_times)
+    utils.writeOutput(inst, '_BnB_', cutoff, seed, vertex_cover, solution_times, folder)

@@ -176,11 +176,12 @@ class Graph:
 class LocalSearch1:
 
     # Based on Heuristic from decisional version
-    def __init__(self, filename, cutoff, random_seed):
+    def __init__(self, filename, cutoff, random_seed, folder):
         self.filename = filename
         self.graph = Graph(filename, random_seed)
         self.cutoff = cutoff
         self.random_seed = random_seed
+        self.folder = folder
 
     def main(self):
         trace_out = []
@@ -209,18 +210,18 @@ class LocalSearch1:
             else:
                 isVC = True
             elapsetime = time.time() - start_time
-        utils.writeOutput(self.filename, '_LS1_', self.cutoff, self.random_seed, finalVC, trace_out)
+        utils.writeOutput(self.filename, '_LS1_', self.cutoff, self.random_seed, finalVC, trace_out, self.folder)
 
 
 class LocalSearch2:
 
     # Based on Max indep set conversion
-    def __init__(self, filename, cutoff, random_seed):
+    def __init__(self, filename, cutoff, random_seed, folder):
         self.filename = filename
         self.graph = Graph(filename, random_seed)
         self.cutoff = cutoff
         self.random_seed = random_seed
-    
+        self.folder = folder
 
     def main(self):
         trace_out = []
@@ -255,4 +256,8 @@ class LocalSearch2:
             elapsetime = time.time() - start_time
         
         finalVC = self.graph.convertVC(list(set(allVertIndices) - set(MaxIndSet)))
+<<<<<<< HEAD
         utils.writeOutput(self.filename, '_LS2_', self.cutoff, self.random_seed, finalVC, trace_out)
+=======
+        utils.writeOutput(self.filename, '_LS2_', self.cutoff, self.random_seed, finalVC, trace_out, self.folder)
+>>>>>>> 2d106343b20f1ba4561b8b95ee85b85dd60f32b5
