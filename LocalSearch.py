@@ -4,6 +4,7 @@ import sys
 import random
 import networkx as nx
 import os
+import argparse
 import utils
 
 class Graph:
@@ -209,6 +210,7 @@ class LocalSearch1:
                 isVC = True
             elapsetime = time.time() - start_time
         utils.writeOutput(self.filename, '_LS1_', self.cutoff, self.random_seed, finalVC, trace_out)
+
 
 class LocalSearch2:
 

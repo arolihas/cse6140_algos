@@ -22,10 +22,10 @@ if __name__ == '__main__':
         print("Nothing implemented yet")
     elif args.alg == "LS1":
         #run Decision based Local Search Framework
-        ls = LocalSearch1(args.inst, args.time, args.seed)
+        ls = LocalSearch1(args.inst, args.time, i+1)
         ls.main()
     elif args.alg == "LS2": 
         #run Independent Set Local Search Framework
-        ls = LocalSearch2(args.inst, args.time, args.seed)
+        ls = LocalSearch2(args.inst, args.time, i+1)
         ls.main()
     
