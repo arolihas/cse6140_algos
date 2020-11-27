@@ -21,10 +21,11 @@ def read_graph(filename):
     # print('No of nodes in G:', g.number_of_nodes(),'\nNo of Edges in G:', g.number_of_edges())
     return Graph, adj_list, nodes, edges
 
-def writeOutput(filename, algo, cutoff, random_seed, vertex_cover, trace_output):
+def writeOutput(filename, algo, cutoff, random_seed, vertex_cover, trace_output, folder):
     # write the solution and trace files
-    sol_file = "./Output/" + os.path.basename(filename)[:-6] + algo + str(cutoff) + "_" + str(random_seed) + ".sol" 
-    trace_file = "./Output/" +  os.path.basename(filename)[:-6] + algo + str(cutoff) + "_" + str(random_seed) + ".trace" 
+    print(folder)
+    sol_file = folder + os.path.basename(filename)[:-6] + algo + str(cutoff) + "_" + str(random_seed) + ".sol" 
+    trace_file = folder +  os.path.basename(filename)[:-6] + algo + str(cutoff) + "_" + str(random_seed) + ".trace" 
     with open(sol_file, 'w') as sol:
         sol.write(str(len(vertex_cover)) + "\n")
         for vert in vertex_cover[:-1]:

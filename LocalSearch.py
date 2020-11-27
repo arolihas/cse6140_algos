@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # CSE6140 Project
 import time
 import sys
@@ -11,6 +10,7 @@ class Graph:
     """ Vertex class is used to represent individual vertices during search"""
     def __init__(self, filename, random_seed):
         self.Graph, self.adj_list, self.nodes, self.edges = utils.read_graph(filename)
+        random.seed(random_seed)
 
     # ConstructVC method (Algorithm 2 from paper)
     def ConstructVC(self):
@@ -96,12 +96,91 @@ class Graph:
         VertexCover.append(vertex)
         return VertexCover, uncovered_edges
 
+    def maxIndSetInit(self, VertexCover, uncovered_vert):
+        nx.set_node_attributes(self.Graph, 0, 'uncov') # tagx
+        nx.set_node_attributes(self.Graph, 0, 'val')
+        nx.set_node_attributes(self.Graph, 1, 'cov') # tagfree
+        open_vert = []
+
+        for vertex in uncovered_vert:
+            self.Graph.nodes().data()[vertex]['uncov'] = 1
+        for vertex in VertexCover:
+            for neighbor in self.Graph.neighbors(vertex):
+                if self.Graph.nodes().data()[neighbor]['uncov'] == 1:
+                    self.Graph.nodes().data()[vertex]['cov'] = 0
+                    self.Graph.nodes().data()[vertex]['val'] += 1
+            if self.Graph.nodes().data()[vertex]['cov'] == 1:
+                open_vert.append(vertex)
+        
+        return open_vert
+    
+    def minValVertex(self, covered_vertices):
+        sampled_vertex = random.choice(covered_vertices)
+        min_val_vert = sampled_vertex
+        min_val = self.Graph.nodes().data()[min_val_vert]['val']
+        for i in range(5):
+            sampled_vertex = random.choice(covered_vertices)
+            new_val = self.Graph.nodes().data()[sampled_vertex]['val']
+            if new_val < min_val:
+                min_val = new_val
+                min_val_vert = sampled_vertex
+        return min_val_vert
+    
+    def updateIndSet(self, uncovered_vertices, open_vertices, min_value_vertex):
+        for vertex in self.Graph.neighbors(min_value_vertex):
+            self.Graph.nodes().data()[vertex]['val'] += 1
+            if self.Graph.nodes().data()[vertex]['uncov'] == 1:
+                for neighbor in self.Graph.neighbors(vertex):
+                    if neighbor != min_value_vertex:
+                        self.Graph.nodes().data()[neighbor]['val'] -= 1
+                self.Graph.nodes().data()[vertex]['cov'] = 0
+                self.Graph.nodes().data()[vertex]['uncov'] = 0
+                uncovered_vertices.remove(vertex)
+        
+        for vertex in self.Graph.neighbors(min_value_vertex):
+            for neighbor in self.Graph.neighbors(vertex):
+                if self.Graph.nodes().data()[neighbor]['uncov'] == 0 and self.Graph.nodes().data()[vertex]['val'] == 0:
+                    if neighbor not in open_vertices:
+                        open_vertices.append(neighbor)
+                        self.Graph.nodes().data()[neighbor]['cov'] = 1
+        
+        self.Graph.nodes().data()[min_value_vertex]['val'] = 0
+        self.Graph.nodes().data()[min_value_vertex]['cov'] = 1
+        self.Graph.nodes().data()[min_value_vertex]['uncov'] = 1
+        uncovered_vertices.append(min_value_vertex)
+        return uncovered_vertices, open_vertices
+
+    def cleanMaxIndSet(self, uncovered_vertices, open_vertices):
+        while len(open_vertices) > 0:
+            rand_vertex = random.choice(open_vertices)
+            for vertex in self.Graph.neighbors(rand_vertex):
+                self.Graph.nodes().data()[vertex]['val'] += 1
+                if self.Graph.nodes().data()[vertex]['cov'] == 1 and self.Graph.nodes().data()[vertex]['uncov'] == 0:
+                    self.Graph.nodes().data()[vertex]['cov'] = 0
+                    open_vertices.remove(vertex)
+            self.Graph.nodes().data()[rand_vertex]['uncov'] = 1
+            self.Graph.nodes().data()[rand_vertex]['val'] = 0
+            uncovered_vertices.append(rand_vertex)
+            open_vertices.remove(rand_vertex)
+        
+        return uncovered_vertices, open_vertices
+    
+    def convertVC(self, VertexCover):
+        for edge in self.Graph.edges():
+            if edge[0] not in VertexCover and edge[1] not in VertexCover:
+                VertexCover.append(edge[0])
+        return VertexCover
+            
+
 class LocalSearch1:
-    def __init__(self, filename, cutoff, random_seed):
+
+    # Based on Heuristic from decisional version
+    def __init__(self, filename, cutoff, random_seed, folder):
         self.filename = filename
         self.graph = Graph(filename, random_seed)
         self.cutoff = cutoff
         self.random_seed = random_seed
+        self.folder = folder
 
     def main(self):
         trace_out = []
@@ -130,4 +209,49 @@ class LocalSearch1:
             else:
                 isVC = True
             elapsetime = time.time() - start_time
-        utils.writeOutput(self.filename, '_LS1_', self.cutoff, self.random_seed, finalVC, trace_out)
+        utils.writeOutput(self.filename, '_LS1_', self.cutoff, self.random_seed, finalVC, trace_out, self.folder)
+
+class LocalSearch2:
+
+    # Based on Max indep set conversion
+    def __init__(self, filename, cutoff, random_seed, folder):
+        self.filename = filename
+        self.graph = Graph(filename, random_seed)
+        self.cutoff = cutoff
+        self.random_seed = random_seed
+        self.folder = folder
+
+    def main(self):
+        trace_out = []
+
+        # Construct cover
+        VC = self.graph.ConstructVC()
+        num_nodes = self.graph.Graph.number_of_nodes()
+        allVertIndices = list(self.graph.Graph.nodes)
+        uncovered_vert_indices = list(set(allVertIndices) - set(VC))
+        open_vertices = self.graph.maxIndSetInit(VC, uncovered_vert_indices)
+
+        start_time = time.time()
+        elapsetime = 0
+        MaxIndSet = []
+
+        while elapsetime < self.cutoff:
+            if len(uncovered_vert_indices) >= len(MaxIndSet):
+                if len(uncovered_vert_indices) > len(MaxIndSet):
+                    trace_out.append([round(time.time() - start_time, 2), num_nodes - len(uncovered_vert_indices)])
+                MaxIndSet = uncovered_vert_indices.copy()
+                updated_graph = self.graph.Graph.copy()
+                new_open_vertices = open_vertices.copy()
+            else:
+                uncovered_vert_indices = MaxIndSet.copy()
+                self.graph.Graph = updated_graph.copy()
+                open_vertices = new_open_vertices.copy()
+
+            selected_vertices = list(set(allVertIndices) - set(uncovered_vert_indices))
+            min_val_vertex = self.graph.minValVertex(selected_vertices)
+            uncovered_vert_indices, open_vertices = self.graph.updateIndSet(uncovered_vert_indices, open_vertices, min_val_vertex)
+            uncovered_vert_indices, open_vertices = self.graph.cleanMaxIndSet(uncovered_vert_indices, open_vertices)
+            elapsetime = time.time() - start_time
+        
+        finalVC = self.graph.convertVC(list(set(allVertIndices) - set(MaxIndSet)))
+        utils.writeOutput(self.filename, '_LS2_', self.cutoff, self.random_seed, finalVC, trace_out, self.folder)
