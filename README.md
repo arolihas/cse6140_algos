@@ -1,9 +1,10 @@
 CSE 6140 Algos
 
-This project has multiple approximation method for the minimum vertex cover. To run these methods make sure you have the following:
+This project has multiple approximation methods for the minimum vertex cover. To run these methods make sure you have the following:
 
 1) Download the dataset and put it into a DATA directory on the same level as the code and output folder
-2) Have anaconda downloaded and run the following line inside the code folder:
+
+2) Have anaconda downloaded and run the following line:
 
 conda create --name <env> --file requirements.txt 
 
