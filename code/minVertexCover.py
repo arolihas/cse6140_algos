@@ -13,13 +13,12 @@ parser.add_argument("-inst", help='Which file to run', default='../DATA/dummy1.g
 parser.add_argument("-alg", help='Choose which method to run (BnB, Approx, LS1, LS2)', default="LS1", choices=["BnB", "Approx", "LS1", "LS2"])
 parser.add_argument("-time", help='When to stop the run in seconds', type=int, default=600)
 parser.add_argument("-seed", help='Random Seed for Local Search', type=int, default=32)
-parser.add_argument("-folder", help='What folder to save', default='./Output/') 
 args = parser.parse_args()
 
 if __name__ == '__main__':
     if args.alg == "BnB":
         #run Branch and Bound
-        BranchAndBound.main(args.inst, args.time, args.seed, args.folder)
+        BranchAndBound.main(args.inst, args.time, args.seed)
     elif args.alg == "Approx": 
         #run Heuristics
         approx.measure_performance(args.inst, args.time, args.seed)
