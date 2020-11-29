@@ -71,3 +71,64 @@ plt.xlabel('run-time [CPU sec]')
 plt.ylabel('P(solve)')
 plt.title('LS2 star2.graph QRTD')
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
+
+import matplotlib.pyplot as plt
+x1 = sorted([62,62,62,62,63,63,62,63,64,62])
+x2 = sorted([35,50,42,39,43,47,36,40,41,35])
+x3 = sorted([19,41,23,21,25,24,18,19,21,15])
+x4 = sorted([8,15,5,7,9,5,6,9,6,6])
+y = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
+
+plt.plot([(2200+x-2203)/2203 for x in x1], y, 'r', label='t=0.5s')
+plt.plot([(2200+x-2203)/2203 for x in x2], y, 'b', label='t=5s')
+plt.plot([(2200+x-2203)/2203 for x in x3], y, 'g', label='t=10s')
+plt.plot([(2200+x-2203)/2203 for x in x4], y, 'y', label='t=20s')
+plt.xlabel('relative solution quality [%]')
+plt.ylabel('P(solve)')
+plt.title('LS1 power.graph SQD')
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
+
+x1 = sorted([41,56,50,51,61,56,56,53,57,57])
+x2 = sorted([23,96,74,63,17,88,94,87,100,94])
+x3 = sorted([48,15,103,89,45,97,16,16,23,25])
+x4 = sorted([76,122,131,140,153,115,126,144,142,150])
+y = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
+
+plt.plot([(4800+x-4542)/4542 for x in x1], y, 'r', label='t=30s')
+plt.plot([(4700+x-4542)/4542 for x in x2], y, 'b', label='t=180s')
+plt.plot([(4600+x-4542)/4542 for x in x3], y, 'g', label='t=360s')
+plt.plot([(4500+x-4542)/4542 for x in x4], y, 'y', label='t=540s')
+plt.xlabel('relative solution quality [%]')
+plt.ylabel('P(solve)')
+plt.title('LS1 star2.graph SQD')
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
+
+x1 = sorted([60,58,58,56,58,54,53,61,60,57])
+x2 = sorted([51,52,47,51,52,37,42,50,51,48])
+x3 = sorted([33,27,29,36,31,18,26,31,33,30])
+x4 = sorted([18,17,13,18,16,10,15,17,18,15])
+y = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
+
+plt.plot([(2200+x-2203)/2203 for x in x1], y, 'r', label='t=30s')
+plt.plot([(2200+x-2203)/2203 for x in x2], y, 'b', label='t=60s')
+plt.plot([(2200+x-2203)/2203 for x in x3], y, 'g', label='t=180s')
+plt.plot([(2200+x-2203)/2203 for x in x4], y, 'y', label='t=360s')
+plt.xlabel('relative solution quality [%]')
+plt.ylabel('P(solve)')
+plt.title('LS2 power.graph SQD')
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
+
+x1 = sorted([56,58,58,57,58,58,58,58,58,58])
+x2 = sorted([49,51,55,52,54,55,54,56,54,53])
+x3 = sorted([40,34,45,45,50,48,40,46,46,38])
+x4 = sorted([27,19,30,35,40,34,26,35,32,13])
+y = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
+
+plt.plot([(4800+x-4542)/4542 for x in x1], y, 'r', label='t=0.5s')
+plt.plot([(4800+x-4542)/4542 for x in x2], y, 'b', label='t=10s')
+plt.plot([(4800+x-4542)/4542 for x in x3], y, 'g', label='t=5s')
+plt.plot([(4800+x-4542)/4542 for x in x4], y, 'y', label='t=20')
+plt.xlabel('relative solution quality [%]')
+plt.ylabel('P(solve)')
+plt.title('LS2 star2.graph SQD')
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
