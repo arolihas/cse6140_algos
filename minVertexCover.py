@@ -25,28 +25,10 @@ if __name__ == '__main__':
         approx.measure_performance('./DATA/'+args.inst+'.graph', args.time, args.seed)
     elif args.alg == "LS1":
         #run Decision based Local Search Framework
-        if (args.inst == "all"):
-            for filename in os.listdir("./DATA"): #all graphs
-                if ((".graph") in filename):
-                    filepath = os.path.join("./DATA", filename)
-                    ls = LocalSearch1(filepath, args.time, args.seed, args.folder)
-                    ls.main()
-        elif (args.seed == 100): #rand seed
-            for i in range(1,11):
-                print(i)
-                ls = LocalSearch1(args.inst, args.time, i, args.folder)
-                ls.main()
-        else:
-            ls = LocalSearch1(args.inst, args.time, args.seed, args.folder)
-            ls.main()
+        ls = LocalSearch1(args.inst, args.time, args.seed)
+        ls.main()
     elif args.alg == "LS2": 
         #run Independent Set Local Search Framework
-        if (args.seed == 100): #rand seed
-            for i in range(1,11):
-                print(i)
-                ls = LocalSearch2(args.inst, args.time, i, args.folder)
-                ls.main()
-        else:
-            ls = LocalSearch2(args.inst, args.time, args.seed, args.folder)
-            ls.main()
+        ls = LocalSearch2(args.inst, args.time, args.seed)
+        ls.main()
     

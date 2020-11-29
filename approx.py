@@ -32,4 +32,4 @@ def measure_performance(instance, time, seed):
     G, _, _, _ = read_graph(instance)
     T = time * 60
     cover, times = approximate_vertex_cover(G, T)
-    writeOutput(instance, '_CH_', T, seed, cover, times)
+    writeOutput(instance, '_Approx_', T, seed, cover, times)

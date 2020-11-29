@@ -4,6 +4,7 @@ import sys
 import random
 import networkx as nx
 import os
+import argparse
 import utils
 
 class Graph:
@@ -211,6 +212,7 @@ class LocalSearch1:
             elapsetime = time.time() - start_time
         utils.writeOutput(self.filename, '_LS1_', self.cutoff, self.random_seed, finalVC, trace_out, self.folder)
 
+
 class LocalSearch2:
 
     # Based on Max indep set conversion
@@ -254,4 +256,4 @@ class LocalSearch2:
             elapsetime = time.time() - start_time
         
         finalVC = self.graph.convertVC(list(set(allVertIndices) - set(MaxIndSet)))
-        utils.writeOutput(self.filename, '_LS2_', self.cutoff, self.random_seed, finalVC, trace_out, self.folder)
+        utils.writeOutput(self.filename, '_LS2_', self.cutoff, self.random_seed, finalVC, trace_out)
